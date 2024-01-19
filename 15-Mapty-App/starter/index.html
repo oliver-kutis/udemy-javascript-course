@@ -32,6 +32,36 @@
     <div class="sidebar">
       <img src="logo.png" alt="Logo" class="logo" />
 
+      <!-- <form class="form-sort">
+        <div class="form__row">
+          <label class="form__label">Sort by: </label>
+          <select class="form__input form__input--type">
+            <option value="type">Type</option>
+            <option value="duration">Duration</option>
+            <option value="distance">Distance</option>
+            <option value="cadence-elevation">Cadence / Elevatiom</option>
+          </select>
+        </div>
+        <div class="form__row arrow">
+          <button>&darr;</button>
+        </div>
+        <div class="form__row arrow form__row--hidden">
+          <button>&uarr;</button>
+        </div>
+      </form> -->
+
+      <div id="sort-container">
+        <label for="sort-type">Sort by: </label>
+        <select id="sort-type">
+          <option value="type">Type</option>
+          <option value="duration">Duration</option>
+          <option value="distance">Distance</option>
+          <option value="cadence-elevation">Cadence / Elevation</option>
+        </select>
+        <button class="sort-button descending">&darr;</button>
+        <button class="sort-button ascending hidden">&uarr;</button>
+      </div>
+
       <ul class="workouts">
         <form class="form hidden">
           <div class="form__row">

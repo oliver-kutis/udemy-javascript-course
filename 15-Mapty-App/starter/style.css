@@ -3,6 +3,7 @@
   --color-brand--2: #00c46a;
 
   --color-dark--1: #2d3439;
+  --color-dark--1-darker: #28292a;
   --color-dark--2: #42484d;
   --color-light--1: #aaa;
   --color-light--2: #ececec;
@@ -72,7 +73,7 @@ a:visited {
   padding: 1.5rem 2.25rem;
   margin-bottom: 1.75rem;
   cursor: pointer;
-
+  position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 0.75rem 1.5rem;
@@ -128,6 +129,55 @@ a:visited {
   transition: all 0.5s, transform 1ms;
 }
 
+#sort-container {
+  background-color: var(--color-dark--1-darker);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  justify-content: space-between;
+  align-items: center;
+  /* gap: 5px; */
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+#sort-type {
+  padding: 5px;
+  font-size: 16px;
+}
+
+.sort-button {
+  padding: 5px 10px;
+  font-size: 20px;
+  background-color: var(--color-dark--1); /* A green color */
+  color: var(--color-brand--2);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.sort-button:hover {
+  background-color: var(--color-brand--2);
+  color: white;
+}
+
+.sort-button.hidden {
+  display: none;
+}
+/* .form-sort select {
+  order: 1;
+} 
+*/
+
+/*
+.form-sort button {
+  /* order: 2; 
+  background-color: transparent;
+  color: var(--color-brand--2);
+} */
+
 .form.hidden {
   transform: translateY(-30rem);
   height: 0;
@@ -139,6 +189,7 @@ a:visited {
 .form__row {
   display: flex;
   align-items: center;
+  /* justify-content: space-between; */
 }
 
 .form__row--hidden {
@@ -171,6 +222,10 @@ a:visited {
   display: none;
 }
 
+/* .form__btn-group {
+  display: flex;
+} */
+
 .copyright {
   margin-top: auto;
   font-size: 1.3rem;
@@ -187,6 +242,52 @@ a:visited {
 .twitter-link:hover,
 .twitter-link:active {
   color: var(--color-light--2);
+}
+
+.reset-btn {
+  display: block;
+  width: 70px;
+  margin: 10px auto;
+  padding: 5px;
+  font-size: 16px;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.delete-btn {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 50%; /* Makes the button circular */
+  width: 20px;
+  height: 20px;
+  font-size: 10px;
+  line-height: 20px; /* Vertically centers the cross */
+  text-align: center; /* Horizontally centers the cross */
+  cursor: pointer;
+}
+
+.edit-btn {
+  position: absolute;
+  top: 0px;
+  right: 25px; /* Adjust this value as needed */
+  background-color: rgba(255, 255, 255, 0); /* Fully transparent white */
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 18px;
+  line-height: 20px;
+  text-align: center;
+  cursor: pointer;
 }
 
 /* MAP */
@@ -217,18 +318,4 @@ a:visited {
 }
 .cycling-popup .leaflet-popup-content-wrapper {
   border-left: 5px solid var(--color-brand--1);
-}
-
-.reset-btn {
-  display: block;
-  width: 70px;
-  margin: 10px auto;
-  padding: 5px;
-  font-size: 16px;
-  background-color: var(--color-brand--2);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  text-align: center;
 }
