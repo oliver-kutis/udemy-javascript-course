@@ -67,16 +67,73 @@ class App {
   }
 
   _loadMap(position) {
+    const showAllWorkouts = this._showAllWorkouts.bind(this);
+    const locate = this._locate.bind(this);
     const lat = position.coords.latitude;
     const long = position.coords.longitude;
     const coords = [lat, long];
 
-    this._map = L.map('map').setView(coords, 15);
+    // TODO: Refactor (together with other functionalities) out of this function
+    //  to the constructor func. where it will server as optional inputs
+    const customIcon = L.icon({
+      iconUrl: 'icon.png',
+      iconSize: [50, 50],
+      iconAnchor: [25, 50],
+      popupAnchor: [0, -50],
+    });
+    const latlng = new L.LatLng(lat, long);
 
+    this._map = L.map('map').setView(coords, 15);
     L.tileLayer('https://tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright',
     }).addTo(this._map);
 
+    L.marker(latlng, { icon: customIcon }).addTo(this._map);
+
+    // TODO: Refactor out of this function
+    // Create a new control with a button
+    const ViewControl = L.Control.extend({
+      options: {
+        position: 'topright', // position of the control
+      },
+
+      onAdd: function (map) {
+        const container = L.DomUtil.create(
+          'div',
+          'leaflet-bar leaflet-control leaflet-control-custom'
+        );
+
+        const button = L.DomUtil.create('button', '', container);
+        button.innerHTML = 'Show all';
+
+        // these two can be refactored into one function
+        // TODO: Refactor
+        const showAllWorkoutsFunction = function () {
+          showAllWorkouts();
+          button.innerHTML = 'Locate';
+          button.onclick = locateFunction;
+        };
+
+        // TODO: Refactor
+        const locateFunction = function () {
+          locate(); // don't we currently have get location function? Can't we do better?
+          button.innerHTML = 'Fit bounds';
+          button.onclick = showAllWorkoutsFunction;
+        };
+
+        button.onclick = showAllWorkoutsFunction;
+
+        // button.onclick = function () {
+        //   // Call your fitBounds method here
+        //   console.log(self);
+        //   fitBounds();
+        // };
+
+        return container;
+      },
+    });
+
+    this._map.addControl(new ViewControl());
     this._map.on('click', this._showForm.bind(this));
     this._displayWorkouts();
     this._displayWorkoutMarkers();
@@ -368,6 +425,8 @@ class App {
       } else if (sortType === 'cadence-elevation') {
         sortType = 'cadence' || 'elevationGain';
         retOp = a.cadence || a.elevationGain - b.cadence || b.elevationGain;
+      } else if (sortType === 'date') {
+        retOp = new Date(a.date) - new Date(b.date);
       } else {
         retOp = a[sortType] - b[sortType];
       }
@@ -391,6 +450,15 @@ class App {
     this._setLocalStorage(sortedWorkouts, false);
   }
 
+  _showAllWorkouts() {
+    let bounds = L.latLngBounds(this.workouts.map(workout => workout.coords));
+    this._map.fitBounds(bounds);
+  }
+
+  _locate() {
+    this._map.locate({ setView: true, maxZoom: 16 });
+  }
+
   reset() {
     localStorage.removeItem('workouts');
     document.location.reload();
@@ -405,7 +473,12 @@ class Workout {
     this.coords = optionalInputs.coords || coords; // [lat, long]
     this.distance = distance; // in km
     this.duration = duration; // in min
-    this.date = optionalInputs.date || new Date();
+    if (optionalInputs.date) {
+      this.date = optionalInputs.date;
+      this.date = new Date(this.date);
+    } else {
+      this.date = new Date();
+    }
     this.id = optionalInputs.id || (Date.now() + '').slice(-10);
   }
 

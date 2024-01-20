@@ -260,8 +260,8 @@ a:visited {
 
 .delete-btn {
   position: absolute;
-  top: 0px;
-  right: 0px;
+  top: 5px;
+  right: 10px;
   background-color: red;
   color: white;
   border: none;
@@ -276,8 +276,8 @@ a:visited {
 
 .edit-btn {
   position: absolute;
-  top: 0px;
-  right: 25px; /* Adjust this value as needed */
+  top: 5px;
+  right: 30px; /* Adjust this value as needed */
   background-color: rgba(255, 255, 255, 0); /* Fully transparent white */
   color: white;
   border: none;
@@ -318,4 +318,25 @@ a:visited {
 }
 .cycling-popup .leaflet-popup-content-wrapper {
   border-left: 5px solid var(--color-brand--1);
+}
+
+.leaflet-bar.leaflet-control.leaflet-control-custom {
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.leaflet-bar button {
+  background-color: #2d3439;
+  font-size: 1.5rem;
+  border-radius: 10px;
+  width: 100px;
+  height: 30px;
+  color: #ffb545;
+  outline: none !important;
+  padding: 0;
+  cursor: pointer;
+  text-align: center;
+  border: none !important;
+  box-shadow: none !important;
+  /* border-color: #ffb545; */
 }
